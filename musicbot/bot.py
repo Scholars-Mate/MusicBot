@@ -1064,8 +1064,16 @@ class MusicBot(discord.Bot):
         except:
             pass
 
+    async def slash_play_cmd(self, ctx, song: discord.Option(str, "song name or youtube/spotify url")):
+        await ctx.defer()
+        response = await self.cmd_play("play " + song, self.get_player_in(ctx.guild), ctx.channel, ctx.author, self.permissions.for_user(ctx.author), [song], "")
+        await ctx.respond(response.content)
+
     # noinspection PyMethodOverriding
     def run(self):
+        # Slash commands
+        self.slash_command(name = "play", description = "play a song")(self.slash_play_cmd)
+
         try:
             self.loop.run_until_complete(self.start(*self.config.auth))
 
