@@ -1069,6 +1069,102 @@ class MusicBot(discord.Bot):
         response = await self.cmd_play("play " + song, self.get_player_in(ctx.guild), ctx.channel, ctx.author, self.permissions.for_user(ctx.author), [song], "")
         await ctx.respond(response.content)
 
+    async def slash_resetplaylist_cmd(sef, ctx):
+        pass
+
+    async def slash_help_cmd(self, ctx):
+        pass
+
+    async def slash_blacklist_cmd(self, ctx):
+        pass
+
+    async def slash_id_cmd(self, ctx):
+        pass
+
+    async def slash_save_cmd(self, ctx):
+        pass
+
+    async def slash_joinserver_cmd(self, ctx):
+        pass
+
+    async def slash_karaoke_cmd(self, ctx):
+        pass
+
+    async def slash_playnext_cmd(self, ctx, song: discord.Option(str, "song name or youtube/spotify url")):
+        pass
+
+    async def slash_stream_cmd(self, ctx):
+        pass
+
+    async def slash_search_cmd(self, ctx, search: discord.Option(str, "search string")):
+        pass
+
+    async def slash_np_cmd(self, ctx):
+        pass
+
+    async def slash_summon_cmd(self, ctx):
+        pass
+
+    async def slash_pause_cmd(self, ctx):
+        pass
+
+    async def slash_resume_cmd(self, ctx):
+        pass
+
+    async def slash_shuffle_cmd(self, ctx):
+        pass
+
+    async def slash_clear_cmd(self, ctx):
+        pass
+
+    async def slash_remove_cmd(self, ctx, number: discord.Option(int, "the number of the song in queue")):
+        pass
+
+    async def slash_skip_cmd(self, ctx):
+        pass
+
+    async def slash_volume_cmd(self, ctx, volume: discord.Option(int, "new volume")):
+        pass
+
+    async def slash_option_cmd(self, ctx):
+        pass
+
+    async def slash_queue_cmd(self, ctx):
+        pass
+
+    async def slash_clean_cmd(self, ctx, search_range: discord.Option(int, "the number of songs to remove")):
+        pass
+
+    async def slash_pldump_cmd(self, ctx):
+        pass
+
+    async def slash_listids_cmd(self, ctx):
+        pass
+
+    async def slash_perms_cmd(self, ctx):
+        pass
+
+    async def slash_setname_cmd(self, ctx, name: discord.Option(str, "new name")):
+        pass
+
+    async def slash_setnick_cmd(self, ctx, name: discord.Option(str, "new name")):
+        pass
+
+    async def slash_setavatar_cmd(self, ctx, url: discord.Option(str, "url of the new avatar")):
+        pass
+
+    async def slash_disconnect_cmd(self, ctx):
+        pass
+
+    async def slash_restart_cmd(self, ctx):
+        pass
+
+    async def slash_shutdown(self, ctx):
+        pass
+
+    async def slash_leaveserver(self, ctx):
+        pass
+
     # noinspection PyMethodOverriding
     def run(self):
         # Slash commands
