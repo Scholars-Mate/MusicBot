@@ -178,6 +178,11 @@ class Config:
             "DefaultSearchResults",
             fallback=ConfigDefaults.defaultsearchresults,
         )
+        self.test_guild = config.get(
+            "MusicBot",
+            "TestGuild",
+            fallback=ConfigDefaults.test_guild
+        )
 
         self.debug_level = config.get(
             "MusicBot", "DebugLevel", fallback=ConfigDefaults.debug_level
@@ -518,6 +523,7 @@ class ConfigDefaults:
     searchlist = False
     defaultsearchresults = 3
     footer_text = "Just-Some-Bots/MusicBot ({})".format(BOTVERSION)
+    test_guild = None
 
     options_file = "config/options.ini"
     blacklist_file = "config/blacklist.txt"
