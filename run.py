@@ -407,11 +407,14 @@ def main():
         m = None
         try:
             from musicbot import MusicBot
+            from musicbot import app_commands
 
             m = MusicBot()
 
             sh.terminator = ""
             sh.terminator = "\n"
+
+            app_commands.initialize_slash_commands(m)
 
             m.run()
 
