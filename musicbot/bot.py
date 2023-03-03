@@ -2766,7 +2766,7 @@ class MusicBot(discord.Client):
             )
 
         voice_client = self.voice_client_in(guild)
-        if voice_client and guild == author.voice.channel.guild:
+        if voice_client and guild == author.voice.channel.guild and self.get_player_in(guild):
             await voice_client.move_to(author.voice.channel)
         else:
             # move to _verify_vc_perms?
