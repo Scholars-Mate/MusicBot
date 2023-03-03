@@ -1698,7 +1698,7 @@ class MusicBot(discord.Client):
     ):
         player = _player if _player else None
 
-        if permissions.summonplay:
+        if not player and permissions.summonplay:
             voice_channel = author.voice.channel if author.voice else None
             response = await self.cmd_summon(
                 channel, channel.guild, author, voice_channel
@@ -1715,8 +1715,7 @@ class MusicBot(discord.Client):
                 expire_in=response.delete_after if self.config.delete_messages else 0,
             )
             player = self.get_player_in(channel.guild)
-
-        if not player:
+        elif not player:
             raise exceptions.CommandError(
                 "The bot is not in a voice channel.  "
                 "Use %ssummon to summon it to your voice channel."
