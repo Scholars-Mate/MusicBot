@@ -62,7 +62,7 @@ intents.typing = False
 intents.presences = False
 
 
-class MusicBot(discord.Client):
+class MusicBot(discord.Bot):
     def __init__(self, config_file=None, perms_file=None, aliases_file=None):
         try:
             sys.stdout.write("\x1b]2;MusicBot {}\x07".format(BOTVERSION))
