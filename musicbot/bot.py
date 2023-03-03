@@ -1103,7 +1103,9 @@ class MusicBot(discord.Bot):
         pass
 
     async def slash_summon_cmd(self, ctx):
-        pass
+        await ctx.defer()
+        response = await self.cmd_summon(channel = ctx.channel, guild = ctx.guild, author = ctx.author, voice_channel = None)
+        await ctx.respond(embed = discord.Embed(title = "Summon", description = response.content))
 
     async def slash_pause_cmd(self, ctx):
         pass
@@ -1117,11 +1119,32 @@ class MusicBot(discord.Bot):
     async def slash_clear_cmd(self, ctx):
         pass
 
-    async def slash_remove_cmd(self, ctx, number: discord.Option(int, "the number of the song in queue")):
-        pass
+    async def slash_remove_cmd(self, ctx, position: discord.Option(int, "the number of the song in queue to remove")):
+        await ctx.defer()
+        response = await self.cmd_remove(
+            user_mentions = None,
+            message = ctx.message,
+            author = ctx.author,
+            permissions = self.permissions.for_user(ctx.author),
+            channel = ctx.channel,
+            player = self.get_player_in(ctx.guild),
+            index = position
+        )
+        await ctx.respond(response.content)
+
 
     async def slash_skip_cmd(self, ctx):
-        pass
+        await ctx.defer()
+        response = await self.cmd_skip(
+            player = self.get_player_in(ctx.guild),
+            channel = ctx.channel,
+            author = ctx.author,
+            message = ctx.message,
+            permissions = self.permissions.for_user(ctx.author),
+            voice_channel = None,
+            param = "force"
+        )
+        await ctx.respond(response.content)
 
     async def slash_volume_cmd(self, ctx, volume: discord.Option(int, "new volume")):
         pass
@@ -1130,7 +1153,9 @@ class MusicBot(discord.Bot):
         pass
 
     async def slash_queue_cmd(self, ctx):
-        pass
+        await ctx.defer()
+        response = await self.cmd_queue(channel = ctx.channel, player = self.get_player_in(ctx.guild))
+        await ctx.respond(embed = discord.Embed(title = "Queue", description = response.content))
 
     async def slash_clean_cmd(self, ctx, search_range: discord.Option(int, "the number of songs to remove")):
         pass
@@ -1154,10 +1179,14 @@ class MusicBot(discord.Bot):
         pass
 
     async def slash_disconnect_cmd(self, ctx):
-        pass
+        await ctx.defer()
+        await self.disconnect_voice_client(ctx.guild)
+        await ctx.respond("Disconnected from {}".format(ctx.guild.name))
 
     async def slash_restart_cmd(self, ctx):
-        pass
+        await ctx.respond("Restarting...")
+        await self.disconnect_all_voice_clients()
+        raise exceptions.RestartSignal()
 
     async def slash_shutdown(self, ctx):
         pass
@@ -1169,6 +1198,12 @@ class MusicBot(discord.Bot):
     def run(self):
         # Slash commands
         self.slash_command(name = "play", description = "play a song")(self.slash_play_cmd)
+        self.slash_command(name = "queue", description = "display the current queue")(self.slash_queue_cmd)
+        self.slash_command(name = "summon", description = "summon the bot the current voice channel")(self.slash_summon_cmd)
+        self.slash_command(name = "disconnect", description = "force the bot to leave the current voice channel")(self.slash_disconnect_cmd)
+        self.slash_command(name = "restart", description = "restart the bot")(self.slash_restart_cmd)
+        self.slash_command(name = "remove", description = "remove a song from the queue")(self.slash_remove_cmd)
+        self.slash_command(name = "skip", description = "skip the current song")(self.slash_skip_cmd)
 
         try:
             self.loop.run_until_complete(self.start(*self.config.auth))
