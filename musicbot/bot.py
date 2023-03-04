@@ -1700,20 +1700,7 @@ class MusicBot(discord.Bot):
 
         if not player and permissions.summonplay:
             voice_channel = author.voice.channel if author.voice else None
-            response = await self.cmd_summon(
-                channel, channel.guild, author, voice_channel
-            )  # @TheerapakG: As far as I know voice_channel param is unused
-            if self.config.embeds:
-                content = self._gen_embed()
-                content.title = "summon"
-                content.description = response.content
-            else:
-                content = response.content
-            await self.safe_send_message(
-                channel,
-                content,
-                expire_in=response.delete_after if self.config.delete_messages else 0,
-            )
+            await self.cmd_summon(channel, channel.guild, author, voice_channel)
             player = self.get_player_in(channel.guild)
         elif not player:
             raise exceptions.CommandError(
