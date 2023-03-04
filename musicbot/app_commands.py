@@ -24,14 +24,27 @@ def initialize_slash_commands(bot: MusicBot):
     async def stream(ctx):
         pass
 
+    @bot.slash_command(name = "pause", description = "Pause the current song", guild_ids = test_guild)
     async def pause(ctx):
-        pass
+        await ctx.defer()
+        response = await ctx.bot.cmd_pause(ctx.bot.get_player_in(ctx.guild))
+        await ctx.respond(response.content)
 
+    @bot.slash_command(name = "resume", description = "Resume playback a paused song", guild_ids = test_guild)
     async def resume(ctx):
-        pass
+        await ctx.defer()
+        response = await ctx.bot.cmd_resume(ctx.bot.get_player_in(ctx.guild))
+        await ctx.respond(response.content)
 
-    async def volume(ctx, volume: discord.Option(int, "New volume")):
-        pass
+    @bot.slash_command(name = "volume", description = "Display or set the current volume", guild_ids = test_guild)
+    async def volume(ctx, volume: discord.Option(int, "New volume", required = False)):
+        await ctx.defer()
+        response = await ctx.bot.cmd_volume(
+            message = "",
+            player = ctx.bot.get_player_in(ctx.guild),
+            new_volume = str(volume) if volume else None
+        )
+        await ctx.respond(response.content)
 
     # Playlist Manipulation
     @bot.slash_command(name = "queue", description = "Display the current queue", guild_ids = test_guild)
@@ -43,8 +56,19 @@ def initialize_slash_commands(bot: MusicBot):
         )
         await ctx.respond(embed = discord.Embed(title = "Queue", description = response.content))
 
+    @bot.slash_command(name = "np", description = "Displays the current song in chat", guild_ids = test_guild)
     async def np(ctx):
-        pass
+        await ctx.defer()
+        response = await ctx.bot.cmd_np(
+            player = ctx.bot.get_player_in(ctx.guild),
+            channel = ctx.channel,
+            guild = ctx.guild,
+            message = ""
+        )
+        if response:
+            await ctx.respond(response.content)
+        else:
+            await ctx.delete()
 
     @bot.slash_command(name = "skip", description = "Skip the current song", guild_ids = test_guild)
     async def skip(ctx):
@@ -80,14 +104,31 @@ def initialize_slash_commands(bot: MusicBot):
     async def save(ctx):
         pass
 
+    @bot.slash_command(name = "clear", description = "Clears the queue", guild_ids = test_guild)
     async def clear(ctx):
-        pass
+        await ctx.defer()
+        response = await ctx.bot.cmd_clear(
+            player = ctx.bot.get_player_in(ctx.guild),
+            author = ctx.author
+        )
+        await ctx.respond(response.content)
 
     async def resetplaylist(ctx):
         pass
 
+    @bot.slash_command(name = "playnext", description = "Adds a song to the top of the queue", guild_ids = test_guild)
     async def playnext(ctx, song: discord.Option(str, "Song or youtube/spotify url")):
-        pass
+        await ctx.defer()
+        response = await ctx.bot.cmd_playnext(
+            message = "",
+            _player = ctx.bot.get_player_in(ctx.guild),
+            channel = ctx.channel,
+            author = ctx.author,
+            permissions = ctx.bot.permissions.for_user(ctx.author),
+            leftover_args = [song],
+            song_url = ""
+        )
+        await ctx.respond(response.content)
 
     async def shuffle(ctx):
         pass
@@ -146,7 +187,7 @@ def initialize_slash_commands(bot: MusicBot):
     async def help(ctx):
         pass
 
-    async def clean(ctx, search_range: discord.Option(int, "The number of songs to remove")):
+    async def clean(ctx, search_range: discord.Option(int, "The number of messages to remove")):
         pass
 
     async def id(ctx):
