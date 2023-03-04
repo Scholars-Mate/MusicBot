@@ -7,8 +7,8 @@ def initialize_slash_commands(bot: MusicBot):
     test_guild = [bot.config.test_guild]
 
     # Media controls
-    @bot.slash_command(name = "play", description = "play a song", guild_ids = test_guild)
-    async def play(ctx, song: discord.Option(str, "song name or youtube/spotify url")):
+    @bot.slash_command(name = "play", description = "Play a song", guild_ids = test_guild)
+    async def play(ctx, song: discord.Option(str, "Song or youtube/spotify url")):
         await ctx.defer()
         response = await ctx.bot.cmd_play(
             message = "",
@@ -30,11 +30,11 @@ def initialize_slash_commands(bot: MusicBot):
     async def resume(ctx):
         pass
 
-    async def volume(ctx, volume: discord.Option(int, "new volume")):
+    async def volume(ctx, volume: discord.Option(int, "New volume")):
         pass
 
     # Playlist Manipulation
-    @bot.slash_command(name = "queue", description = "display the current queue", guild_ids = test_guild)
+    @bot.slash_command(name = "queue", description = "Display the current queue", guild_ids = test_guild)
     async def queue(ctx):
         await ctx.defer()
         response = await ctx.bot.cmd_queue(
@@ -46,7 +46,7 @@ def initialize_slash_commands(bot: MusicBot):
     async def np(ctx):
         pass
 
-    @bot.slash_command(name = "skip", description = "skip the current song", guild_ids = test_guild)
+    @bot.slash_command(name = "skip", description = "Skip the current song", guild_ids = test_guild)
     async def skip(ctx):
         await ctx.defer()
         response = await ctx.bot.cmd_skip(
@@ -60,8 +60,8 @@ def initialize_slash_commands(bot: MusicBot):
         )
         await ctx.respond(response.content)
 
-    @bot.slash_command(name = "remove", description = "remove a song from the queue", guild_ids = test_guild)
-    async def remove(ctx, position: discord.Option(int, "the number of the song in queue to remove")):
+    @bot.slash_command(name = "remove", description = "Remove a song from the queue", guild_ids = test_guild)
+    async def remove(ctx, position: discord.Option(int, "The number of the song in queue to remove")):
         await ctx.defer()
         response = await ctx.bot.cmd_remove(
             user_mentions = None,
@@ -74,7 +74,7 @@ def initialize_slash_commands(bot: MusicBot):
         )
         await ctx.respond(response.content)
 
-    async def search(ctx, search: discord.Option(str, "search string")):
+    async def search(ctx, search: discord.Option(str, "Search string")):
         pass
 
     async def save(ctx):
@@ -86,7 +86,7 @@ def initialize_slash_commands(bot: MusicBot):
     async def resetplaylist(ctx):
         pass
 
-    async def playnext(ctx, song: discord.Option(str, "song name or youtube/spotify url")):
+    async def playnext(ctx, song: discord.Option(str, "Song or youtube/spotify url")):
         pass
 
     async def shuffle(ctx):
@@ -96,7 +96,7 @@ def initialize_slash_commands(bot: MusicBot):
         pass
 
     # Bot Administration
-    @bot.slash_command(name = "summon", description = "summon the bot the current voice channel", guild_ids = test_guild)
+    @bot.slash_command(name = "summon", description = "Summon the bot the current voice channel", guild_ids = test_guild)
     async def summon(ctx):
         await ctx.defer()
         response = await ctx.bot.cmd_summon(
@@ -107,13 +107,13 @@ def initialize_slash_commands(bot: MusicBot):
         )
         await ctx.respond(embed = discord.Embed(title = "Summon", description = response.content))
 
-    @bot.slash_command(name = "disconnect", description = "force the bot to leave the current voice channel", guild_ids = test_guild)
+    @bot.slash_command(name = "disconnect", description = "Force the bot to leave the current voice channel", guild_ids = test_guild)
     async def disconnect(ctx):
         await ctx.defer()
         await ctx.bot.disconnect_voice_client(ctx.guild)
         await ctx.respond("Disconnected from {}".format(ctx.guild.name))
 
-    @bot.slash_command(name = "restart", description = "restart the bot", guild_ids = test_guild)
+    @bot.slash_command(name = "restart", description = "Restart the bot", guild_ids = test_guild)
     async def restart(ctx):
         await ctx.respond("Restarting...");
         await ctx.bot.cmd_restart(ctx.channel)
@@ -130,13 +130,13 @@ def initialize_slash_commands(bot: MusicBot):
     async def leaveserver(ctx):
         pass
 
-    async def setname(ctx, name: discord.Option(str, "new name")):
+    async def setname(ctx, name: discord.Option(str, "New name")):
         pass
 
-    async def setnick(ctx, name: discord.Option(str, "new name")):
+    async def setnick(ctx, name: discord.Option(str, "New name")):
         pass
 
-    async def setavatar(ctx, url: discord.Option(str, "url of the new avatar")):
+    async def setavatar(ctx, url: discord.Option(str, "Url of the new avatar")):
         pass
 
     async def option(ctx):
@@ -146,7 +146,7 @@ def initialize_slash_commands(bot: MusicBot):
     async def help(ctx):
         pass
 
-    async def clean(ctx, search_range: discord.Option(int, "the number of songs to remove")):
+    async def clean(ctx, search_range: discord.Option(int, "The number of songs to remove")):
         pass
 
     async def id(ctx):
